@@ -1,0 +1,22 @@
+{
+  "name": "word-guess-2",
+  "version": "1.0.0",
+  "description": "Second version of Word Guess using constructors",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/j0hnruss0/Word-Guess-2.git"
+  },
+  "author": "John Russo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/j0hnruss0/Word-Guess-2/issues"
+  },
+  "homepage": "https://github.com/j0hnruss0/Word-Guess-2#readme",
+  "dependencies": {
+    "inquirer": "^6.4.1"
+  }
+}
