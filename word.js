@@ -3,6 +3,7 @@ var Letter = require("./letter.js");
 var Word = function(gameWord) {
     
     this.guesses = 9;
+    this.picked = [];
     this.puzzleArray = function() {
         var wordArray = [];
         for (var i = 0; i < gameWord.length; i++) {

@@ -27,12 +27,11 @@ function startGame() {
     var puzzle = new Word(gameWord);
     var answer = puzzle.puzzleArray();
     var unsolved = puzzle.createPuzzle(answer);
-    var picked = [];
     
-    startRound(puzzle, answer, unsolved, picked);
+    startRound(puzzle, answer, unsolved, gameWord);
 };
 
-function startRound(puzzle, answer, unsolved, picked) {
+function startRound(puzzle, answer, unsolved, gameWord) {
     if (puzzle.guesses > 1) {
         console.log("\nWhat TV Show is This? You have " + puzzle.guesses + " Guesses!");
     } else if (puzzle.guesses === 1) {
@@ -60,17 +59,44 @@ function startRound(puzzle, answer, unsolved, picked) {
         // }  
         unsolved = puzzle.changePuzzle(answer, ans.guess);
         
-        if (unchanged !== unsolved) {
+        if (unchanged !== unsolved && !puzzle.picked.includes(ans.guess.toLowerCase())) {
             console.log("CORRECT!!!");
-        } else {
+            puzzle.picked.push(ans.guess.toLowerCase());
+        } else if (unchanged === unsolved && !puzzle.picked.includes(ans.guess.toLowerCase())) {
             console.log("OOHHH NNNNOOOO");
+            puzzle.picked.push(ans.guess.toLowerCase());
+            puzzle.guesses -= 1;
+        } else if (puzzle.picked.includes(ans.guess.toLowerCase())) {
+            console.log("You already picked that letter...");
         }
-        
-        startRound(puzzle, answer, unsolved);
+
+        if (!unsolved.includes("_")) {
+            console.log("YOU WIN! " + gameWord + " is one of my favorite shows!");
+            gameOver();
+            return;
+        } else if (unsolved.includes("_") && puzzle.guesses < 1) {
+            console.log("You lost... The show was " + gameWord);
+            gameOver();
+            return;
+        }
+
+        startRound(puzzle, answer, unsolved, gameWord);
     })
-}
+};
 
-
-
+function gameOver() { 
+    inquirer.prompt({
+        type: "confirm",
+        name: "restart",
+        message: "Ready to play again?"
+    }).then(function(ans) {
+        if (ans.restart) {
+            startGame();
+        } else if (!ans.start) {
+            console.log("\nyou have selected 'NO'\nGoodbye!\n");
+            return;
+        }
+    })  
+};
 
 titleCard();
