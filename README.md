@@ -8,4 +8,5 @@ Middle-Stage Development Development
 Goals:
 
 * create win/lose parameters
+* modify game-state conditions
 

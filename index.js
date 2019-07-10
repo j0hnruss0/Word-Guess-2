@@ -27,11 +27,12 @@ function startGame() {
     var puzzle = new Word(gameWord);
     var answer = puzzle.puzzleArray();
     var unsolved = puzzle.createPuzzle(answer);
+    var picked = [];
     
-    startRound(puzzle, answer, unsolved);
+    startRound(puzzle, answer, unsolved, picked);
 };
 
-function startRound(puzzle, answer, unsolved) {
+function startRound(puzzle, answer, unsolved, picked) {
     if (puzzle.guesses > 1) {
         console.log("\nWhat TV Show is This? You have " + puzzle.guesses + " Guesses!");
     } else if (puzzle.guesses === 1) {
@@ -50,35 +51,26 @@ function startRound(puzzle, answer, unsolved) {
             return false;
             }
     }).then(function(ans) {
+        var unchanged = unsolved;
         console.log("You entered " + ans.guess);
-        
+        // for (var i = 0; i < answer.length; i++) {
+        //     if (ans.guess.toLowerCase() === answer[i].rightLetter.toLowerCase()) {
+        //         console.log("CORRECT!!!");
+        //     }
+        // }  
         unsolved = puzzle.changePuzzle(answer, ans.guess);
+        
+        if (unchanged !== unsolved) {
+            console.log("CORRECT!!!");
+        } else {
+            console.log("OOHHH NNNNOOOO");
+        }
+        
         startRound(puzzle, answer, unsolved);
     })
 }
 
-// function startGame() {
-    
-//     console.log("\nWhat TV Show is This? You have 9 Guesses!");
-//     console.log(newWord.changePuzzle(wordArr, " ") + "\n\n");
-//     inquirer.prompt({
-//         type: "input",
-//         message: "Enter a letter from A to Z",
-//         name: "guess",
-//         validate: function(value) {
-//             if (value.match(/^[a-zA-Z]*$/) && value.length === 1) {
-//               return true;
-//             }
-//             console.log("\nPlease make a valid choice\nOne letter at a time, no numbers or special characters");
-//             return false;
-//           }
-//     }).then(function(ans) {
-        
-//         console.log("You entered " + ans.guess);
-        
-//     })
 
-// }
 
 
 titleCard();
